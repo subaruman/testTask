@@ -23,6 +23,7 @@
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
                     <td class="text-right">
+
                         <form onsubmit="if(confirm('Удалить?'))
                         {
                             return true
@@ -31,8 +32,9 @@
                         } " action="{{route('admin.user_managment.user.destroy', $user)}}" method="post">
                             {{method_field('DELETE')}}
                             {{csrf_field()}}
-                            <a class="btn btn-default" href="{{route('admin.user_managment.user.edit', $user)}}"><i class="fa fa-edit"></i> </a>
 
+                            <a class="btn btn-default" href="{{route('admin.user_managment.user.edit', $user)}}"><i class="fa fa-edit"></i> </a>
+                            <button type="submit" class="btn"><i class="fa fa-trash-o"></i></button>
                         </form>
                         <a href="{{route('admin.category.edit', ['id'=>$user->id])}}"><i class="fafa-edit"></i> </a>
                     </td>
