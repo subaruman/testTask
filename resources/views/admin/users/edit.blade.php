@@ -12,11 +12,11 @@
 
         <hr/>
 
-        <form class="form-horizontal" action="{{route('admin.user_managment.user.update', $user)}}" method="post">
+        <form class="form-horizontal" action="{{route('admin.users.update', $user)}}" method="post">
             {{method_field('PUT')}}
             {{csrf_field()}}
 
-            @include('admin.user_managment.users.form')
+            @include('admin.users.form')
 
         </form>
 

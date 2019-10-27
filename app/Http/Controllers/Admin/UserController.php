@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin\UserManagment;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -17,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.user_managment.users.index', [
+        return view('admin.users.index', [
             'users' => User::paginate(10)
         ]);
     }
@@ -29,7 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user_managment.users.create', [
+        printf('USER2');
+        return view('admin.users.create', [
             'user' => []
         ]);
     }
@@ -51,9 +53,9 @@ class UserController extends Controller
         User::create([
             'name' => $request['name'],
             'email' => $request['email'],
-            'password' => bcrypt($request['password'])
+            'password' => bcrypt($request['password']),
         ]);
-        return redirect()->route('admin.user_managment.user.index');
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -75,8 +77,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.user_managment.users.edit', [
-            'user' => $user
+        return view('admin.users.edit', [
+            'user' => $user,
         ]);
     }
 
@@ -99,10 +101,16 @@ class UserController extends Controller
         $user->email = $request['email'];
         if ($request['password'] == null){
             $user->password = bcrypt($request['password']);
+        } else {
+            $user->password = bcrypt($request['password']);
         }
+        if ($request['ban'] == true){
+            $user->banned = 1;
+        }   else $user->banned = 0;
+
         $user->save();
 
-        return redirect()->route('admin.user_managment.user.index');
+        return redirect()->route('admin.users.index');
 
     }
 
@@ -115,6 +123,15 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.user_managment.user.index');
+        return redirect()->route('admin.users.index');
     }
+
+
+   public function setban(User $user)
+   {
+       $user->banned = '1';
+       $user->save();
+       return redirect()->route('admin.users.index');
+   }
+
 }

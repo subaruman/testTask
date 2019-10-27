@@ -52,7 +52,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                            role="button" aria-expanded="false">Блог</a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{route('admin.category.index')}}">Категории </a></li>
+{{--                            <li><a href="{{route('admin.category.index')}}">Категории </a></li>--}}
                             <li><a href="#">Материалы</a></li>
                         </ul>
                     </li>
@@ -60,7 +60,8 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                            role="button" aria-expanded="false">Управление пользователями</a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{route('admin.user_managment.user.index')}}">Пользователи </a></li>
+                            <li><a href="{{route('admin.users.index')}}">Пользователи </a></li>
+{{--                            /var/www/html/testTaskMS/resources/views/admin/users/index.blade.php--}}
                         </ul>
                     </li>
                 </ul>

@@ -20,6 +20,17 @@
 <label for="">Подтверждение</label>
 <input type="password" class="form-control" name="password_confirmation">
 
+<label for="">Бан</label>
+
+<p hidden="true">{{$ban = $user->banned }}</p>
+
+@if ($ban == 1)
+    <input type="checkbox" class="form-control" name="ban" checked="">
+@else
+    <input type="checkbox" class="form-control" name="ban">
+@endif
+
+
 <hr/>
 
 <input class="btn btn-primary" type="submit" value="Сохранить">

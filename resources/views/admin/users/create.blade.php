@@ -12,10 +12,10 @@
 
         <hr/>
 
-        <form class="form-horizontal" action="{{route('admin.user_managment.user.store')}}" method="post">
+        <form class="form-horizontal" action="{{route('admin.users.store')}}" method="post">
             {{csrf_field()}}
 
-            @include('admin.user_managment.users.form')
+            @include('admin.users.form')
 
         </form>
 

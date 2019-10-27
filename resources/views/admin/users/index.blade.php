@@ -10,7 +10,8 @@
         @endcomponent
         <hr>
 
-        <a href="{{route('admin.user_managment.user.create')}}" class="btn btn-primary pull-right"><i class="fafa-plus-square-o"></i>Создать пользователя </a>
+        <a href="{{route('admin.users.create')}}" class="btn btn-primary pull-right">
+            <i class="fafa-plus-square-o"></i>Создать пользователя </a>
         <table class="table table-striped">
             <thead>
             <th>Имя</th>
@@ -29,14 +30,24 @@
                             return true
                         } else {
                             return false
-                        } " action="{{route('admin.user_managment.user.destroy', $user)}}" method="post">
+                        } " action="{{route('admin.users.destroy', $user)}}" method="post">
                             {{method_field('DELETE')}}
                             {{csrf_field()}}
 
-                            <a class="btn btn-default" href="{{route('admin.user_managment.user.edit', $user)}}"><i class="fa fa-edit"></i> </a>
+                            <a class="btn btn-default" href="{{route('admin.users.edit', $user)}}">
+                                <i class="fa fa-edit"></i> </a>
                             <button type="submit" class="btn"><i class="fa fa-trash-o"></i></button>
                         </form>
-                        <a href="{{route('admin.category.edit', ['id'=>$user->id])}}"><i class="fafa-edit"></i> </a>
+                        <form onsubmit="if(confirm('Забанить?')){
+                            return true
+                        } else {
+                            return false
+                        } " action="{{route('admin.users.setban', $user)}}" method="post">
+                            {{method_field('PUT')}}
+                            {{csrf_field()}}
+                            <button type="submit" class="btn"><i class="fa fa-ban"></i></button>
+                        </form>
+{{--                        <a href="{{route('admin.category.edit', ['id'=>$user->id])}}"><i class="fafa-edit"></i> </a>--}}
                     </td>
                 </tr>
             @empty
