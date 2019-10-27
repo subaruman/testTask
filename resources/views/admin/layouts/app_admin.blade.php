@@ -47,26 +47,8 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                           role="button" aria-expanded="false">Блог</a>
-                        <ul class="dropdown-menu" role="menu">
-{{--                            <li><a href="{{route('admin.category.index')}}">Категории </a></li>--}}
-                            <li><a href="#">Материалы</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                           role="button" aria-expanded="false">Управление пользователями</a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{route('admin.users.index')}}">Пользователи </a></li>
-{{--                            /var/www/html/testTaskMS/resources/views/admin/users/index.blade.php--}}
-                        </ul>
-                    </li>
-                </ul>
-
-
+                <a class="btn btn-primary mr-2" href="{{route('admin.users.index')}}">Пользователи </a>
+                <a class="btn btn-primary" href="{{route('admin.category.index')}}">Чек листы </a>
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->

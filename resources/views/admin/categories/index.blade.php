@@ -4,13 +4,14 @@
 
     <div class="container">
 @component('admin.components.breadcrumb')
-    @slot('title') Список категорий @endslot
+    @slot('title') Список чек листов @endslot
     @slot('parent') Главная @endslot
-    @slot('active') Категории @endslot
+    @slot('active') Чек листы @endslot
 @endcomponent
  <hr>
 
-    <a href="{{route('admin.category.create')}}" class="btn btn-primary pull-right"><i class="fafa-plus-square-o"></i>Создать категорию </a>
+    <a href="{{route('admin.category.create')}}" class="btn btn-primary pull-right">
+        <i class="fafa-plus-square-o"></i>Создать чек лист </a>
         <table class="table table-striped">
             <thead>
             <th>Наименование</th>

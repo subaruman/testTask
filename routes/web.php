@@ -15,11 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix'=>'admin','namespace'=>'Admin', 'middleware'=>['auth']], function(){
+Route::group(['prefix'=>'admin','namespace'=>'Admin', 'middleware'=>['role']], function(){
     Route::get('/', 'DashboardController@dashboard')->name('admin.index');
     Route::resource('/category', 'CategoryController', ['as'=>'admin']);
     Route::resource('/users', 'UserController', ['as' => 'admin']);
     Route::put('/setban', 'UserController@setban', ['as' => 'users'])->name('admin.users.setban');
+//    Route::get('/', 'DashboardController@dashboard', ['as'=>'admin']);
 //    Route::post('/users/{user}/setban', 'UserController@setban')->name('users.setban');
 //    Route::post('setban', 'UserController')->name('users.index');
 

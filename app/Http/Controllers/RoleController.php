@@ -8,7 +8,6 @@ class RoleController extends Controller
 {
     //
     public function index(){
-        echo "<br>Role Controller.";
         return view('home');
     }
 }

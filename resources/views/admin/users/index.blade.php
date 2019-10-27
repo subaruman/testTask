@@ -38,7 +38,7 @@
                                 <i class="fa fa-edit"></i> </a>
                             <button type="submit" class="btn"><i class="fa fa-trash-o"></i></button>
                         </form>
-                        <form onsubmit="if(confirm('Забанить?')){
+                       {{-- <form onsubmit="if(confirm('Забанить?')){
                             return true
                         } else {
                             return false
@@ -46,7 +46,7 @@
                             {{method_field('PUT')}}
                             {{csrf_field()}}
                             <button type="submit" class="btn"><i class="fa fa-ban"></i></button>
-                        </form>
+                        </form>--}}
 {{--                        <a href="{{route('admin.category.edit', ['id'=>$user->id])}}"><i class="fafa-edit"></i> </a>--}}
                     </td>
                 </tr>

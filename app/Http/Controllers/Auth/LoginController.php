@@ -36,14 +36,12 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        print_r('Login controller');
     }
 
     public function authenticate(Request $request)
     {
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'banned' => null])) {
-            print_r($request);
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
 
         } else {
             return redirect()->route('login');

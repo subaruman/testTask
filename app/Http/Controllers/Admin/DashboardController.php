@@ -9,8 +9,8 @@ class DashboardController extends Controller
 {
     //DashBoard
     public function dashboard(){
-//        $this->middleware('auth');
-        printf('Dashboard');
+        $this->middleware('auth');
+        $this->middleware('role');
         return view('admin.dashboard');
     }
 }
