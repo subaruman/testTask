@@ -7,7 +7,7 @@
         </ul>
     </div>
 @endif
-
+<div>
 <label for="">Имя</label>
 <input type="text" class="form-control" name="name" placeholder="Имя" value="@if(old('name')){{old('name')}}@else{{$user->name ?? ""}}@endif" required>
 
@@ -22,16 +22,18 @@
 
 <label for="">Бан</label>
 
-<p hidden="true">{{$ban = $user->banned }}</p>
-
-@if ($ban == 1)
-    <input type="checkbox" class="form-control" name="ban" checked="">
-@else
-    <input type="checkbox" class="form-control" name="ban">
+@if (!empty($user->banned))
+    <p hidden="true">{{$ban = $user->banned}}</p>
+    @if ($ban == 1)
+        <input type="checkbox" class="form-control" name="ban" checked="">
+    @else
+        <input type="checkbox" class="form-control" name="ban">
+    @endif
+    @else
+    <input type="checkbox" class="form-control pull-left" name="ban">
 @endif
-
 
 <hr/>
 
 <input class="btn btn-primary" type="submit" value="Сохранить">
-
+</div>

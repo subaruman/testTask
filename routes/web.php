@@ -42,11 +42,14 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/home',[
     'middleware' => 'ban',
     'uses' => 'RoleController@index',
 ]);
+
+
+Route::group(['prefix'=>'checklist', 'middleware'=>['auth']], function() {
+//    Route::get('/', 'ChecklistController@index')->name('checklist.index');
+    Route::resource('/', 'ChecklistController', ['as' => 'checklist']);
+});

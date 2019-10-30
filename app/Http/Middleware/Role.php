@@ -15,6 +15,6 @@ class Role
             if (Auth::user()->accessRight == 2 || Auth::user()->accessRight == 1){    //2 admin
                 return $next($request);
             }
-        abort(403, 'Unauthorized action.');
+        abort(403, 'Access denied.');
     }
 }

@@ -30,7 +30,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        printf('USER2');
         return view('admin.users.create', [
             'user' => []
         ]);
@@ -127,11 +126,11 @@ class UserController extends Controller
     }
 
 
-   public function setban(User $user)
+/*   public function setban(User $user)
    {
        $user->banned = '1';
        $user->save();
        return redirect()->route('admin.users.index');
-   }
+   }*/
 
 }
