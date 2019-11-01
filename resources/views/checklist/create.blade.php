@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div class="container">
 
-        @component('admin.components.breadcrumb')
+        @component('checklist.breadcrumb')
             @slot('title') Создание чек листа @endslot
             @slot('parent') Главная @endslot
             @slot('active') Чек лист @endslot

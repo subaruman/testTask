@@ -14,11 +14,22 @@ class CreateChecklistsTable extends Migration
     public function up()
     {
         Schema::create('checklists', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->engine = 'InnoDB';
+            $table->bigIncrements('id')->unsigned();
             $table->string('name');
+            $table->bigInteger('item_checklist_id')->unsigned();
+            $table->boolean('completed');
             $table->timestamps();
-//            $table->foreign('user_id')->references('id')->on('users');
         });
+
+     /*   Schema::table('checklists', function(Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->foreign('id')
+                ->references('checklist_id')
+                ->on('items_checklist')
+                ->onDelete('cascade');
+
+        });*/
     }
 
     /**

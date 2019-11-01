@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Category;
-use App\Http\Controllers\Controller;
+use App\ItemsChecklist;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class ItemsChecklistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.categories.index', [
-            'categories' => Category::paginate(10)
-        ]);
+        //
     }
 
     /**
@@ -27,11 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create', [
-            'category' => [],
-            'categories' => Category::with('children')->where('parent_id', '0')->get(),
-            'delimiter' => ''
-        ]);
+        //
     }
 
     /**
@@ -48,10 +41,10 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  \App\ItemsChecklist  $itemsChecklist
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(ItemsChecklist $itemsChecklist)
     {
         //
     }
@@ -59,10 +52,10 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  \App\ItemsChecklist  $itemsChecklist
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(ItemsChecklist $itemsChecklist)
     {
         //
     }
@@ -71,10 +64,10 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
+     * @param  \App\ItemsChecklist  $itemsChecklist
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, ItemsChecklist $itemsChecklist)
     {
         //
     }
@@ -82,10 +75,10 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param  \App\ItemsChecklist  $itemsChecklist
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(ItemsChecklist $itemsChecklist)
     {
         //
     }

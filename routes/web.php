@@ -20,10 +20,6 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin', 'middleware'=>['role']], f
     Route::resource('/category', 'CategoryController', ['as'=>'admin']);
     Route::resource('/users', 'UserController', ['as' => 'admin']);
     Route::put('/setban', 'UserController@setban', ['as' => 'users'])->name('admin.users.setban');
-//    Route::get('/', 'DashboardController@dashboard', ['as'=>'admin']);
-//    Route::post('/users/{user}/setban', 'UserController@setban')->name('users.setban');
-//    Route::post('setban', 'UserController')->name('users.index');
-
 
 });
 //Route::get('/admin', 'Admin\DashboardController@dashboard', ['namespace'=>['Admin'], 'middleware'=>['auth']])->name('admin.index');
@@ -49,7 +45,12 @@ Route::get('/home',[
 ]);
 
 
-Route::group(['prefix'=>'checklist', 'middleware'=>['auth']], function() {
-//    Route::get('/', 'ChecklistController@index')->name('checklist.index');
-    Route::resource('/', 'ChecklistController', ['as' => 'checklist']);
+
+
+Route::group(['middleware'=>['auth']], function() {
+    Route::resource('/checklist', 'ChecklistController');
+
 });
+
+//Route::get('/checklist', 'ChecklistController@index')->name('checklist.index');
+//Route::get('/checklist/create', 'ChecklistController@create')->name('checklist.create');
