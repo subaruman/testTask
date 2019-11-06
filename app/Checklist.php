@@ -12,6 +12,6 @@ class Checklist extends Model
     ];
 
     public function items(){
-        return $this->hasMany('App\Checklist', 'id');
+        return $this->hasMany('App\ItemsChecklist', 'checklist_id');
     }
 }

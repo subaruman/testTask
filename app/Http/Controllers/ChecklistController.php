@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Checklist;
 use App\ItemsChecklist;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Self_;
 
 class ChecklistController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +17,11 @@ class ChecklistController extends Controller
      */
     public function index()
     {
+
         return view('checklist.index', [
-            'checklists' => Checklist::paginate(10)
+            'checklists' => Checklist::all(),
+            'items' => ItemsChecklist::all(),
+
         ]);
 
     }
@@ -51,6 +56,19 @@ class ChecklistController extends Controller
             'name' => $request['name'],
             'completed' => false
         ]);
+
+        $notes = $request['note'];
+        foreach ($notes as $note){
+            if (!empty($note)) {
+
+                ItemsChecklist::create([
+                    'note' => $note,
+                    'checklist_id' => Checklist::query()->max('id'),
+                    'completed' => false,
+                ]);
+            }
+
+        }
 //        implode( Input::get('completed',[])),
         return redirect()->route('checklist.index');
     }
@@ -75,6 +93,11 @@ class ChecklistController extends Controller
     public function edit(Checklist $checklist)
     {
         //
+
+        return view('checklist.edit', [
+            'checklist' => $checklist,
+//            'items_checklist' => ItemsChecklist::query()->where($checklist->id == )
+        ]);
     }
 
     /**
@@ -87,6 +110,11 @@ class ChecklistController extends Controller
     public function update(Request $request, Checklist $checklist)
     {
         //
+        $checklist->name = $request->name;
+        if ($request->completed == 'on')
+            $checklist->completed = 1;
+        $checklist->save();
+        return redirect()->route('checklist.index');
     }
 
     /**

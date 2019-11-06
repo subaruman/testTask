@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix'=>'admin','namespace'=>'Admin', 'middleware'=>['role']], function(){
+Route::group(['prefix'=>'admin','namespace'=>'Admin', 'middleware'=>['role', 'ban']], function(){
     Route::get('/', 'DashboardController@dashboard')->name('admin.index');
     Route::resource('/category', 'CategoryController', ['as'=>'admin']);
     Route::resource('/users', 'UserController', ['as' => 'admin']);
@@ -36,20 +36,27 @@ Route::get('/ban', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', ['middleware' => 'ban', 'uses' => 'HomeController@index'])->name('home');
 
 
-Route::get('/home',[
+/*Route::get('/home',[
     'middleware' => 'ban',
     'uses' => 'RoleController@index',
-]);
+]);*/
+
+/*Route::group(['prefix'=>'/', 'middleware'=>['ban']], function() {
+    Route::resource('/', 'RoleController');
+
+});*/
 
 
-
-
-Route::group(['middleware'=>['auth']], function() {
+Route::group(['middleware'=>['auth', 'ban']], function() {
     Route::resource('/checklist', 'ChecklistController');
 
+});
+
+Route::group(['middleware'=>['auth', 'ban']], function() {
+    Route::resource('/checklist/items', 'ItemsChecklistController');
 });
 
 //Route::get('/checklist', 'ChecklistController@index')->name('checklist.index');

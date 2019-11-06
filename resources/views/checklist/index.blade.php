@@ -17,8 +17,11 @@
             <th class="text-right">Действие</th>
             </thead>
             <tbody>
+
             @forelse($checklists as $checklist)
                 <tr>
+{{--                    <td><a class="fa fa-edit" href="{{route('items.edit', $checklist)}}"></a> </td>--}}
+
                     <td>{{$checklist->name}}</td>
                     @if ($checklist->completed == false)
                         <td><input type="checkbox" name="completed" class=""></td>
@@ -28,7 +31,7 @@
 
                     @endif
                     <td>
-{{--                        <a href="{{route('checklist.edit', ['id'=>$checklist->id])}}"><i class="fafa-edit"></i> </a>--}}
+                        <a class="btn btn-default" href="{{route('checklist.edit', $checklist)}}"><i class="fa fa-edit"></i> </a>
                     </td>
                 </tr>
             @empty

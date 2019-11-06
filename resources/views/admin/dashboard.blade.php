@@ -4,7 +4,7 @@
     <div class="container">
 
         <div class="col-sm-6">
-            <a class="list-group-item">
+    {{--        <a class="list-group-item">
                 <a class="btn btn-block btn-default" href="#">Создать категорию</a>
                 <h4 class="list-group-item-heading">Категория первая</h4>
                 <p class="list-group-item-text">
@@ -18,7 +18,7 @@
                     <p class="list-group-item-text">
                         Категория
                     </p>
-                </a>
+                </a>--}}
         </div>
     </div>
 @endsection

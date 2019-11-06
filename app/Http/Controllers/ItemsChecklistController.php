@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Checklist;
 use App\ItemsChecklist;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,7 @@ class ItemsChecklistController extends Controller
     public function index()
     {
         //
+
     }
 
     /**
@@ -58,6 +60,9 @@ class ItemsChecklistController extends Controller
     public function edit(ItemsChecklist $itemsChecklist)
     {
         //
+        return view('checklist.show_items', [
+            'items' => $itemsChecklist,
+        ]);
     }
 
     /**
