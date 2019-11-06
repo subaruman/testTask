@@ -1,3 +1,4 @@
+{{--
 <script type="text/javascript">
     let counter = 1;
     function addField() {
@@ -68,3 +69,4 @@
 
 
 @endsection
+--}}

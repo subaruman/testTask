@@ -33,18 +33,26 @@
     </div>
 @endif
 <div>
-    <label for="">Название</label>
-    <input type="text" class="form-control" id="name" name="name" placeholder="Название" value="@if(old('name')){{old('name')}}@else{{$checklist->name ?? ""}}@endif" required>
+    <table class="table table-striped" id="wrap">
+        <th class="text-center col-1">Название</th>
+        <th class="text-center col-1">Выполнено</th>
+        <tr>
+{{--            <td><label for="">Название</label></td>--}}
+            <td class="text-center col-1"><input type="text" class="form-control col" id="name" name="name" placeholder="Название" value="@if(old('name')){{old('name')}}@else{{$checklist->name ?? ""}}@endif" required></td>
+            @if (!empty($checklist->completed))
+                <p hidden="true">{{$complet = $checklist->completed}}</p>
+                @if ($complet == 1)
+                    <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed" checked=""></td>
+                @else
+                    <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed"></td>
+                @endif
+            @else
+                <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed"></td>
+            @endif
 
-    <div id="wrap">
-{{--здесь появляются пункты--}}
-    </div>
-
+        </tr>
+    </table>
     <hr/>
 
     <input class="btn btn-primary" type="submit" value="Сохранить">
-    <input class="btn btn-primary" type="button" value="Добавить пункт" onclick="addField();">
 
-
-
-</div>

@@ -60,7 +60,7 @@ class ItemsChecklistController extends Controller
     public function edit(ItemsChecklist $itemsChecklist)
     {
         //
-        return view('checklist.show_items', [
+        return view('checklist.items_checklist.show_items', [
             'items' => $itemsChecklist,
         ]);
     }

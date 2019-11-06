@@ -16,7 +16,7 @@
             {{method_field('PUT')}}
             {{csrf_field()}}
 
-            @include('checklist.show_checklist')
+            @include('checklist.form')
 
         </form>
 

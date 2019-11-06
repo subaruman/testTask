@@ -70,7 +70,9 @@
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                         <a href="{{ url('/checklist') }}">Checklist</a>
-                        <a href="{{ url('/admin') }}">Admin panel</a>
+                        @if (Auth::user()->accessRight == 2 || Auth::user()->accessRight == 1)
+                            <a href="{{ url('/admin') }}">Admin panel</a>
+                        @endif
 
                     @else
                         <a href="{{ route('login') }}">Login</a>

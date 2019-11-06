@@ -36,7 +36,6 @@ class ChecklistController extends Controller
         return view('checklist.create', [
             'checklists' => [],
 //            'items_checklist' => Checklist::with('items')->get(),
-//            'delimiter' => ''
         ]);
     }
 
@@ -58,16 +57,17 @@ class ChecklistController extends Controller
         ]);
 
         $notes = $request['note'];
-        foreach ($notes as $note){
-            if (!empty($note)) {
+        if (!empty($note)){
+            foreach ($notes as $note){
+                if (!empty($note)) {
 
-                ItemsChecklist::create([
-                    'note' => $note,
-                    'checklist_id' => Checklist::query()->max('id'),
-                    'completed' => false,
-                ]);
+                    ItemsChecklist::create([
+                        'note' => $note,
+                        'checklist_id' => Checklist::query()->max('id'),
+                        'completed' => false,
+                    ]);
+                }
             }
-
         }
 //        implode( Input::get('completed',[])),
         return redirect()->route('checklist.index');
@@ -113,6 +113,8 @@ class ChecklistController extends Controller
         $checklist->name = $request->name;
         if ($request->completed == 'on')
             $checklist->completed = 1;
+        else $checklist->completed = 0;
+
         $checklist->save();
         return redirect()->route('checklist.index');
     }
@@ -125,6 +127,7 @@ class ChecklistController extends Controller
      */
     public function destroy(Checklist $checklist)
     {
-        //
+        $checklist->delete();
+        return redirect()->route('checklist.index');
     }
 }

@@ -2,19 +2,15 @@
 
 @section('content')
     <div class="container">
-{{--        @component('checklist.breadcrumb')--}}
-            <h2> Список чек листов </h2>
-{{--            @slot('parent') Главная @endslot--}}
-{{--            @slot('active') Чек листы @endslot--}}
-{{--        @endcomponent--}}
-{{--        <hr>--}}
+        <h2> Список чек листов </h2>
+
         <a href="{{route('checklist.create')}}" class="btn btn-primary pull-right">
             <i class="fafa-plus-square-o"></i>Создать чек лист </a>
         <table class="table table-striped">
             <thead>
-            <th>Название</th>
-            <th>Выполнено</th>
-            <th class="text-right">Действие</th>
+            <th class="text-center col-1">Название</th>
+            <th class="text-center col-1">Выполнено</th>
+            <th class="text-center col-2">Действие</th>
             </thead>
             <tbody>
 
@@ -22,16 +18,30 @@
                 <tr>
 {{--                    <td><a class="fa fa-edit" href="{{route('items.edit', $checklist)}}"></a> </td>--}}
 
-                    <td>{{$checklist->name}}</td>
+                    <td class="text-center col-1">{{$checklist->name}}</td>
                     @if ($checklist->completed == false)
-                        <td><input type="checkbox" name="completed" class=""></td>
+                        <td class="text-center col-1"><input type="checkbox" name="completed" class=""></td>
                     @else
                         <p hidden="true">{{$checklist->completed = true}}</p>
-                        <td><input type="checkbox" name="completed" class="" checked></td>
+                        <td class="text-center col-1"><input type="checkbox" name="completed" class="" checked></td>
 
                     @endif
-                    <td>
-                        <a class="btn btn-default" href="{{route('checklist.edit', $checklist)}}"><i class="fa fa-edit"></i> </a>
+                    <td class="text-center col-1">
+
+                    <form onsubmit="if(confirm('Удалить?'))
+                        {
+                            return true
+                        } else {
+                            return false
+                        } " action="{{route('checklist.destroy', $checklist)}}" method="post">
+                        {{method_field('DELETE')}}
+                        {{csrf_field()}}
+
+                        <a class="btn btn-default" href="{{route('checklist.destroy', $checklist)}}"> </a>
+                            <a class="btn btn-default" href="{{route('checklist.edit', $checklist)}}"><i class="fa fa-edit"></i> </a>
+                        <button type="submit" class="btn"><i class="fa fa-trash-o"></i></button>
+
+                    </form>
                     </td>
                 </tr>
             @empty

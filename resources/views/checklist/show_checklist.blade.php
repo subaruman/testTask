@@ -1,3 +1,4 @@
+{{--
 <script type="text/javascript">
     let counter = 1;
     function addField() {
@@ -45,8 +46,11 @@
     <hr/>
 
     <input class="btn btn-primary" type="submit" value="Сохранить">
-    {{--    <input class="btn btn-primary" type="button" value="Добавить пункт" onclick="addField();">--}}
+    --}}
+{{--    <input class="btn btn-primary" type="button" value="Добавить пункт" onclick="addField();">--}}{{--
+
 
 
 
 </div>
+--}}
