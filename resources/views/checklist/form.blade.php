@@ -49,8 +49,26 @@
             @else
                 <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed"></td>
             @endif
-
         </tr>
+        @foreach($items as $item)
+
+            @if (!empty($item->note))
+            <tr>
+                <td class="text-center col-1"><input type="text" class="form-control col" id="name" name="itemChecklist[]" placeholder="Пункт" value="{{$item->note}}" required></td>
+
+                @endif
+            @if (!empty($item->completed))
+                <p hidden="true">{{$complet = $item->completed}}</p>
+                @if ($complet == 1)
+                    <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed" checked=""></td>
+                @else
+                    <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed"></td>
+                @endif
+            @else
+                <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed"></td>
+            @endif
+            </tr>
+        @endforeach
     </table>
     <hr/>
 

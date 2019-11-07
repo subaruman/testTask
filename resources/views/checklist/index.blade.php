@@ -13,10 +13,9 @@
             <th class="text-center col-2">Действие</th>
             </thead>
             <tbody>
-
             @forelse($checklists as $checklist)
+
                 <tr>
-{{--                    <td><a class="fa fa-edit" href="{{route('items.edit', $checklist)}}"></a> </td>--}}
 
                     <td class="text-center col-1">{{$checklist->name}}</td>
                     @if ($checklist->completed == false)
@@ -36,9 +35,8 @@
                         } " action="{{route('checklist.destroy', $checklist)}}" method="post">
                         {{method_field('DELETE')}}
                         {{csrf_field()}}
-
                         <a class="btn btn-default" href="{{route('checklist.destroy', $checklist)}}"> </a>
-                            <a class="btn btn-default" href="{{route('checklist.edit', $checklist)}}"><i class="fa fa-edit"></i> </a>
+                        <a class="btn btn-default" href="{{route('checklist.edit',  $checklist)}}"><i class="fa fa-edit"></i> </a>
                         <button type="submit" class="btn"><i class="fa fa-trash-o"></i></button>
 
                     </form>

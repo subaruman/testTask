@@ -10,7 +10,6 @@
         @endcomponent
 
         <hr/>
-
         <form class="form-horizontal" action="{{route('checklist.store')}}" method="post">
             {{csrf_field()}}
             @include('checklist.form')

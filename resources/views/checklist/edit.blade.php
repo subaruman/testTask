@@ -3,7 +3,6 @@
 @section('content')
 
     <div class="container">
-
         @component('checklist.breadcrumb')
             @slot('title') Редактирование чек листа @endslot
             @slot('parent') Главная @endslot
@@ -16,7 +15,9 @@
             {{method_field('PUT')}}
             {{csrf_field()}}
 
+
             @include('checklist.form')
+
 
         </form>
 

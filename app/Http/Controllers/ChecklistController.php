@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Checklist;
 use App\ItemsChecklist;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Self_;
 
 class ChecklistController extends Controller
 {
@@ -21,7 +20,6 @@ class ChecklistController extends Controller
         return view('checklist.index', [
             'checklists' => Checklist::all(),
             'items' => ItemsChecklist::all(),
-
         ]);
 
     }
@@ -35,7 +33,7 @@ class ChecklistController extends Controller
     {
         return view('checklist.create', [
             'checklists' => [],
-//            'items_checklist' => Checklist::with('items')->get(),
+            'items' => [],
         ]);
     }
 
@@ -57,10 +55,9 @@ class ChecklistController extends Controller
         ]);
 
         $notes = $request['note'];
-        if (!empty($note)){
+        if (!empty($notes)){
             foreach ($notes as $note){
                 if (!empty($note)) {
-
                     ItemsChecklist::create([
                         'note' => $note,
                         'checklist_id' => Checklist::query()->max('id'),
@@ -69,7 +66,6 @@ class ChecklistController extends Controller
                 }
             }
         }
-//        implode( Input::get('completed',[])),
         return redirect()->route('checklist.index');
     }
 
@@ -93,10 +89,13 @@ class ChecklistController extends Controller
     public function edit(Checklist $checklist)
     {
         //
-
+        $items = ItemsChecklist::with('checklist')
+            ->where('checklist_id', '=', $checklist->id)
+            ->get();
+//        dd($items);
         return view('checklist.edit', [
             'checklist' => $checklist,
-//            'items_checklist' => ItemsChecklist::query()->where($checklist->id == )
+            'items' => $items
         ]);
     }
 
@@ -115,6 +114,19 @@ class ChecklistController extends Controller
             $checklist->completed = 1;
         else $checklist->completed = 0;
 
+        $items = ItemsChecklist::with('checklist')
+            ->where('checklist_id', '=', $checklist->id)
+            ->get();
+
+        for ($i = 0; $i < $items->count(); $i++){
+            ItemsChecklist::with('checklist')
+                ->where('id', '=', $items[$i]->id)
+                ->update([
+                    'note' => $request->itemChecklist[$i]
+                ]);
+            var_dump($items[$i]->id);
+            var_dump($request->itemChecklist[$i]);
+        }
         $checklist->save();
         return redirect()->route('checklist.index');
     }

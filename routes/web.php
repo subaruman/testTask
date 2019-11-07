@@ -55,8 +55,8 @@ Route::group(['middleware'=>['auth', 'ban']], function() {
 
 });
 
-Route::group(['middleware'=>['auth', 'ban']], function() {
-    Route::resource('/checklist/items', 'ItemsChecklistController');
+Route::group(['prefix'=>'checklist','middleware'=>['auth', 'ban']], function() {
+    Route::resource('/items', 'ItemsChecklistController');
 });
 
 //Route::get('/checklist', 'ChecklistController@index')->name('checklist.index');
