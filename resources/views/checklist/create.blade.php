@@ -14,7 +14,7 @@
             {{csrf_field()}}
             @include('checklist.form')
 
-            <input class="btn btn-primary" type="button" value="Добавить пункт" onclick="addField();">
+
         </form>
 
     </div>

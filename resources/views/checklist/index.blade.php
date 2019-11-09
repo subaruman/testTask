@@ -19,10 +19,10 @@
 
                     <td class="text-center col-1">{{$checklist->name}}</td>
                     @if ($checklist->completed == false)
-                        <td class="text-center col-1"><input type="checkbox" name="completed" class=""></td>
+                        <td class="text-center col-1"><input type="checkbox" name="completed" class="" onclick="return false;"></td>
                     @else
                         <p hidden="true">{{$checklist->completed = true}}</p>
-                        <td class="text-center col-1"><input type="checkbox" name="completed" class="" checked></td>
+                        <td class="text-center col-1"><input type="checkbox" name="completed" class="" checked onclick="return false;"></td>
 
                     @endif
                     <td class="text-center col-1">

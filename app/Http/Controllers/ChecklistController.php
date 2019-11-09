@@ -118,7 +118,7 @@ class ChecklistController extends Controller
             ->where('checklist_id', '=', $checklist->id)
             ->get();
 
-        for ($i = 0; $i < $items->count(); $i++){
+        for ($i = 0; $i < $items->count(); $i++) {
             ItemsChecklist::with('checklist')
                 ->where('id', '=', $items[$i]->id)
                 ->update([
@@ -127,6 +127,22 @@ class ChecklistController extends Controller
             var_dump($items[$i]->id);
             var_dump($request->itemChecklist[$i]);
         }
+
+         //если добавили новые пункты
+        $notes = $request->note;
+        if (!empty($notes)) {
+            foreach ($notes as $note) {
+                if (!empty($note)) {
+                    ItemsChecklist::create([
+                        'note' => $note,
+                        'checklist_id' => $checklist->id,
+                        'completed' => false,
+                    ]);
+                }
+            }
+        }
+
+
         $checklist->save();
         return redirect()->route('checklist.index');
     }

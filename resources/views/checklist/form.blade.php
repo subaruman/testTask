@@ -1,11 +1,8 @@
 <script type="text/javascript">
     let counter = 1;
     function addField() {
-        if (counter == 1){
-            wrap.insertAdjacentHTML('beforeend', '<br><label>Пункт ' + counter + '.' + '</label>' + '<input type="text" class="form-control" id="itemChecklist1" name="note[]" placeholder="Пункт" required>');
-        }
+            // wrap.insertAdjacentHTML('beforeend', '<br><label>Пункт ' + counter + '.' + '</label>' + '<input type="text" class="form-control" id="itemChecklist1" name="note[]" placeholder="Пункт" required>');
 
-        if (counter !== 1) {
             let itemChecklistVar = document.createElement('input');
             itemChecklistVar.className = 'form-control';
             itemChecklistVar.placeholder = 'Пункт';
@@ -13,12 +10,13 @@
             itemChecklistVar.id = 'itemChecklist' + counter;
             itemChecklistVar.name = 'note[]';
 
-            wrap.insertAdjacentHTML('beforeend', '<br><label>Пункт ' + counter + '.' + '</label>');
-            wrap.append(itemChecklistVar);
-
-        }
+        wrap.insertAdjacentHTML('beforeend', '<tr>' +
+            '<td class="text-center col-1"><input type="text" class="form-control" id="itemChecklist[]" name="note[]" placeholder="Пункт" required></td>' +
+            '<td class="text-center col-1"><input type="checkbox" class="" name="completed"></td>' +
+            '</tr>');
         counter++;
     }
+
 
 </script>
 
@@ -33,44 +31,51 @@
     </div>
 @endif
 <div>
-    <table class="table table-striped" id="wrap">
+    <table class="table table-striped" >
         <th class="text-center col-1">Название</th>
         <th class="text-center col-1">Выполнено</th>
+
+        <tbody id="wrap">
         <tr>
 {{--            <td><label for="">Название</label></td>--}}
-            <td class="text-center col-1"><input type="text" class="form-control col" id="name" name="name" placeholder="Название" value="@if(old('name')){{old('name')}}@else{{$checklist->name ?? ""}}@endif" required></td>
+
+            <td class="text-center col-1">
+                <input type="text" class="form-control col" id="name" name="name" placeholder="Название"
+                       value="@if(old('name')){{old('name')}}@else{{$checklist->name ?? ""}}@endif" required></td>
+
             @if (!empty($checklist->completed))
                 <p hidden="true">{{$complet = $checklist->completed}}</p>
                 @if ($complet == 1)
-                    <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed" checked=""></td>
+                    <td class="text-center col-1"><input type="checkbox" class="" name="completed" checked=""></td>
                 @else
-                    <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed"></td>
+                    <td class="text-center col-1"><input type="checkbox" class="" name="completed"></td>
                 @endif
             @else
-                <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed"></td>
+                <td class="text-center col-1"><input type="checkbox" class="" name="completed"></td>
             @endif
         </tr>
-        @foreach($items as $item)
 
+        @foreach($items as $item)
             @if (!empty($item->note))
             <tr>
                 <td class="text-center col-1"><input type="text" class="form-control col" id="name" name="itemChecklist[]" placeholder="Пункт" value="{{$item->note}}" required></td>
-
-                @endif
+            @endif
             @if (!empty($item->completed))
                 <p hidden="true">{{$complet = $item->completed}}</p>
                 @if ($complet == 1)
-                    <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed" checked=""></td>
+                    <td class="text-center col-1"><input type="checkbox" class="" name="completed" checked=""></td>
                 @else
-                    <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed"></td>
+                    <td class="text-center col-1"><input type="checkbox" class="" name="completed"></td>
                 @endif
             @else
-                <td class="text-center col-1"><input type="checkbox" class="form-control col" name="completed"></td>
+                <td class="text-center col-1"><input type="checkbox" class="" name="completed"></td>
             @endif
             </tr>
         @endforeach
+            </tbody>
     </table>
     <hr/>
-
+    <input class="btn btn-primary" type="button" value="Добавить пункт" onclick="addField();">
     <input class="btn btn-primary" type="submit" value="Сохранить">
 
+</div>
