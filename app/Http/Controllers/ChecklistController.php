@@ -54,15 +54,19 @@ class ChecklistController extends Controller
             'completed' => false
         ]);
 
+        $indexArr = 0; //индекс массива для вставки в бд
         $notes = $request['note'];
         if (!empty($notes)){
             foreach ($notes as $note){
                 if (!empty($note)) {
+
                     ItemsChecklist::create([
                         'note' => $note,
+                        'number_item' => $indexArr,
                         'checklist_id' => Checklist::query()->max('id'),
                         'completed' => false,
                     ]);
+                    $indexArr++;
                 }
             }
         }
@@ -108,7 +112,9 @@ class ChecklistController extends Controller
      */
     public function update(Request $request, Checklist $checklist)
     {
-        //
+//        dd($request);
+
+
         $checklist->name = $request->name;
         if ($request->completed == 'on')
             $checklist->completed = 1;
@@ -118,28 +124,42 @@ class ChecklistController extends Controller
             ->where('checklist_id', '=', $checklist->id)
             ->get();
 
+        //изменения пункта чеклиста
         for ($i = 0; $i < $items->count(); $i++) {
-            ItemsChecklist::with('checklist')
-                ->where('id', '=', $items[$i]->id)
+            if (empty($request->itemChecklist[$i])){
+//                dd($request->itemChecklist);
+                ItemsChecklist::where('number_item', $i)->delete();
+            } else {
+            ItemsChecklist::where('id', '=', $items[$i]->id)
                 ->update([
                     'note' => $request->itemChecklist[$i]
                 ]);
-            var_dump($items[$i]->id);
-            var_dump($request->itemChecklist[$i]);
+//            var_dump($items[$i]->id);
+//            var_dump($request->itemChecklist[$i]);
+            }
         }
 
-         //если добавили новые пункты
+        //добавление нового пункта чеклиста
+        $indexArr = $request->itemChecklist;
+        end($indexArr);             //получение последнего индекса элемента
+        $indexArr = key($indexArr);       //для вставки в бд
+        $indexArr++;
+
         $notes = $request->note;
         if (!empty($notes)) {
             foreach ($notes as $note) {
                 if (!empty($note)) {
                     ItemsChecklist::create([
                         'note' => $note,
+                        'number_item' => $indexArr,
                         'checklist_id' => $checklist->id,
                         'completed' => false,
                     ]);
                 }
             }
+        } else {
+            /*$itemChecklist = ItemsChecklist::find()
+            ItemsChecklist::delete();*/
         }
 
 
@@ -155,7 +175,12 @@ class ChecklistController extends Controller
      */
     public function destroy(Checklist $checklist)
     {
+//        dd($checklist);
         $checklist->delete();
+        ItemsChecklist::where('checklist_id', $checklist->id)->delete();
+//        dd($itemsChecklist);
+
+
         return redirect()->route('checklist.index');
     }
 }
