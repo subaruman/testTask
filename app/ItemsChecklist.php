@@ -12,6 +12,7 @@ class ItemsChecklist extends Model
     protected $fillable = [
         'note',
         'checklist_id',
+        'number_item',
         'completed'
     ];
 
