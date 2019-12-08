@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Checklist;
 use App\ItemsChecklist;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controller;
 
 class ChecklistController extends Controller
 {
@@ -19,9 +20,10 @@ class ChecklistController extends Controller
     public function index()
     {
 //        dd(Checklist::with('user')->where('user_id', '=', Auth::id())->get());
-        return view('checklist.index', [
-            'checklists' => Checklist::where('user_id', '=', Auth::id())->get(),
+        return view('admin.checklist.index', [
+            'checklists' => Checklist::all(),
             'items' => ItemsChecklist::all(),
+            'users' => User::all(),
         ]);
 
     }
@@ -33,7 +35,7 @@ class ChecklistController extends Controller
      */
     public function create()
     {
-        return view('checklist.create', [
+        return view('admin.checklist.create', [
             'checklists' => [],
             'items' => [],
         ]);
@@ -76,7 +78,7 @@ class ChecklistController extends Controller
                 }
             }
         }
-        return redirect()->route('checklist.index');
+        return redirect()->route('admin.checklist.index');
     }
 
     /**
@@ -103,7 +105,7 @@ class ChecklistController extends Controller
             ->where('checklist_id', '=', $checklist->id)
             ->get();
 
-        return view('checklist.edit', [
+        return view('admin.checklist.edit', [
             'checklist' => $checklist,
             'items' => $items
         ]);
@@ -151,9 +153,8 @@ class ChecklistController extends Controller
                 }
             }
         }
-
         $checklist->save();
-        return redirect()->route('checklist.index');
+        return redirect()->route('admin.checklist.index');
     }
 
     /**
@@ -165,7 +166,7 @@ class ChecklistController extends Controller
     public function destroy(Checklist $checklist)
     {
         $checklist->delete();
-        ItemsChecklist::where($checklist->id, '=', 'checklist_id')->delete();
-        return redirect()->route('checklist.index');
+        ItemsChecklist::where('checklist_id', '=', $checklist->id)->delete();
+        return redirect()->route('admin.checklist.index');
     }
 }

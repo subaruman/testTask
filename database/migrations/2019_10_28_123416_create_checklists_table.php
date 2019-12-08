@@ -17,7 +17,7 @@ class CreateChecklistsTable extends Migration
             $table->engine = 'InnoDB';
             $table->bigIncrements('id')->unsigned();
             $table->string('name');
-            $table->bigInteger('item_checklist_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->boolean('completed');
             $table->timestamps();
         });

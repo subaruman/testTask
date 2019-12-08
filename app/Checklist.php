@@ -8,10 +8,15 @@ class Checklist extends Model
 {
     protected $fillable = [
         'name',
-        'completed'
+        'completed',
+        'user_id'
     ];
 
     public function items(){
         return $this->hasMany('App\ItemsChecklist', 'checklist_id');
+    }
+
+    public function user(){
+        return $this->hasOne('App\User', 'id');
     }
 }
