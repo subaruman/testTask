@@ -134,8 +134,6 @@ class ChecklistController extends Controller
                 ->update([
                     'note' => $request->itemChecklist[$i]
                 ]);
-            var_dump($items[$i]->id);
-            var_dump($request->itemChecklist[$i]);
         }
 
          //если добавили новые пункты
@@ -165,7 +163,7 @@ class ChecklistController extends Controller
     public function destroy(Checklist $checklist)
     {
         $checklist->delete();
-        ItemsChecklist::where($checklist->id, '=', 'checklist_id')->delete();
+        ItemsChecklist::where('checklist_id', '=', $checklist->id)->delete();
         return redirect()->route('checklist.index');
     }
 }

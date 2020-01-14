@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Checklist;
 use App\Http\Controllers\Controller;
+use App\ItemsChecklist;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -98,11 +100,10 @@ class UserController extends Controller
 
         $user->name = $request['name'];
         $user->email = $request['email'];
-        if ($request['password'] == null){
-            $user->password = bcrypt($request['password']);
-        } else {
+        if ($request['password'] != null){
             $user->password = bcrypt($request['password']);
         }
+
         if ($request['ban'] == true){
             $user->banned = 1;
         }   else $user->banned = 0;
@@ -121,6 +122,13 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        //удаление всех чеклистов и пунктов связанных с пользователем
+        $checklist = Checklist::all()->where('user_id', '=', $user->id);
+        foreach ($checklist as $elem) {
+            $itemChecklist = ItemsChecklist::where('checklist_id', '=', $elem['id'])->delete();
+            dump($itemChecklist);
+            Checklist::where('user_id', '=', $user->id)->delete();
+        }
         $user->delete();
         return redirect()->route('admin.users.index');
     }
