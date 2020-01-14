@@ -18,7 +18,7 @@ class ChecklistController extends Controller
      */
     public function index()
     {
-//        dd(Checklist::with('user')->where('user_id', '=', Auth::id())->get());
+
         return view('checklist.index', [
             'checklists' => Checklist::where('user_id', '=', Auth::id())->get(),
             'items' => ItemsChecklist::all(),
@@ -48,6 +48,14 @@ class ChecklistController extends Controller
     public function store(Request $request)
     {
         //
+
+            $user = (User::all()->where('id', '=', Auth::id()));
+            $checklists_limit = $user[1]['checklists_limit'];
+            if (Checklist::all()
+                    ->where('user_id', '=', Auth::id())
+                    ->count() >= $checklists_limit)
+                abort(403, 'Превышен лимит создания чеклистов.');
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
         ]);
@@ -62,7 +70,6 @@ class ChecklistController extends Controller
             'completed' => 0,
             'user_id' => Auth::id(),
             ]);
-
 
         $notes = $request['note'];
         if (!empty($notes)){

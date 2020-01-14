@@ -36,7 +36,9 @@
 
                             <a class="btn btn-default" href="{{route('admin.users.edit', $user)}}">
                                 <i class="fa fa-edit"></i> </a>
-                            <button type="submit" class="btn"><i class="fa fa-trash-o"></i></button>
+                            @if (Auth::user()->accessRight == 2)
+                                <button type="submit" class="btn"><i class="fa fa-trash-o"></i></button>
+                            @endif
                         </form>
                        {{-- <form onsubmit="if(confirm('Забанить?')){
                             return true

@@ -96,10 +96,14 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'password' => ['nullable', 'string', 'min:3', 'confirmed'],
+            'checklists_limit' => ['nullable', 'integer', 'max:255']
         ]);
 
         $user->name = $request['name'];
         $user->email = $request['email'];
+        if (!empty($request['checklists_limit']))
+            $user->checklists_limit = $request['checklists_limit'];
+
         if ($request['password'] != null){
             $user->password = bcrypt($request['password']);
         }
@@ -125,8 +129,7 @@ class UserController extends Controller
         //удаление всех чеклистов и пунктов связанных с пользователем
         $checklist = Checklist::all()->where('user_id', '=', $user->id);
         foreach ($checklist as $elem) {
-            $itemChecklist = ItemsChecklist::where('checklist_id', '=', $elem['id'])->delete();
-            dump($itemChecklist);
+            ItemsChecklist::where('checklist_id', '=', $elem['id'])->delete();
             Checklist::where('user_id', '=', $user->id)->delete();
         }
         $user->delete();
