@@ -19,9 +19,8 @@ class ChecklistController extends Controller
      */
     public function index()
     {
-//        dd(Checklist::with('user')->where('user_id', '=', Auth::id())->get());
         return view('admin.checklist.index', [
-            'checklists' => Checklist::all(),
+            'checklists' => Checklist::with('user')->orderBy('user_id')->get(),
             'items' => ItemsChecklist::all(),
             'users' => User::all(),
         ]);
@@ -136,8 +135,6 @@ class ChecklistController extends Controller
                 ->update([
                     'note' => $request->itemChecklist[$i]
                 ]);
-            var_dump($items[$i]->id);
-            var_dump($request->itemChecklist[$i]);
         }
 
          //если добавили новые пункты

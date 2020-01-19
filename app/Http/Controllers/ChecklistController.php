@@ -50,7 +50,8 @@ class ChecklistController extends Controller
         //
 
             $user = (User::all()->where('id', '=', Auth::id()));
-            $checklists_limit = $user[1]['checklists_limit'];
+            $user = current(current($user));
+            $checklists_limit = $user['checklists_limit'];
             if (Checklist::all()
                     ->where('user_id', '=', Auth::id())
                     ->count() >= $checklists_limit)

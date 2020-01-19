@@ -40,16 +40,16 @@
                                 <button type="submit" class="btn"><i class="fa fa-trash-o"></i></button>
                             @endif
                         </form>
-                       {{-- <form onsubmit="if(confirm('Забанить?')){
-                            return true
-                        } else {
-                            return false
-                        } " action="{{route('admin.users.setban', $user)}}" method="post">
-                            {{method_field('PUT')}}
-                            {{csrf_field()}}
-                            <button type="submit" class="btn"><i class="fa fa-ban"></i></button>
-                        </form>--}}
-{{--                        <a href="{{route('admin.category.edit', ['id'=>$user->id])}}"><i class="fafa-edit"></i> </a>--}}
+                        {{-- <form onsubmit="if(confirm('Забанить?')){
+                             return true
+                         } else {
+                             return false
+                         } " action="{{route('admin.users.setban', $user)}}" method="post">
+                             {{method_field('PUT')}}
+                             {{csrf_field()}}
+                             <button type="submit" class="btn"><i class="fa fa-ban"></i></button>
+                         </form>--}}
+                        {{--                        <a href="{{route('admin.category.edit', ['id'=>$user->id])}}"><i class="fafa-edit"></i> </a>--}}
                     </td>
                 </tr>
             @empty
