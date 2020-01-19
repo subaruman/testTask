@@ -4,21 +4,22 @@
     <div class="container">
 
         <div class="col-sm-6">
-    {{--        <a class="list-group-item">
-                <a class="btn btn-block btn-default" href="#">Создать категорию</a>
-                <h4 class="list-group-item-heading">Категория первая</h4>
-                <p class="list-group-item-text">
-                    Кол-во материалов
-                </p>
-            </a>
-            <div class="col-sm-6">
-                <a class="list-group-item">
-                    <a class="btn btn-block btn-default" href="#">Создать материал</a>
-                    <h4 class="list-group-item-heading">Материал первый</h4>
-                    <p class="list-group-item-text">
-                        Категория
-                    </p>
-                </a>--}}
+                <h5 class="list-group-item-heading">Количество пользователей зарегистрированных
+                    на сайте: {{$users}}</h5>
         </div>
+        <div class="col-sm-6">
+                <h5 class="list-group-item-heading">Количество чеклистов созданных
+                    на сайте: {{$checklists}}</h5>
+        </div>
+
+        <div class="col-sm-6">
+            <h5 class="list-group-item-heading">Количество пунктов чеклистов созданных
+                на сайте: {{$items}}</h5>
+        </div>
+
     </div>
+
+
+
+
 @endsection

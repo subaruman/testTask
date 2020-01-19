@@ -1,30 +1,27 @@
 <script type="text/javascript">
     let counter = 1;
-
     function addField() {
-        $('#wrap').append(`<tr>
-            <td class="text-center col-1">
-            <input type="text" class="form-control" name="itemChecklist[]"
-            placeholder="Пункт" required></td>
-            <td class="text-center col-1">
-            <input type="checkbox" class="" name="completed">
-            <a class="btn kill-tr" href="#" onclick="removeField();"><i class="fa fa-trash-o"></i></a></td>
-            </tr>`);
+            // wrap.insertAdjacentHTML('beforeend', '<br><label>Пункт ' + counter + '.' + '</label>' + '<input type="text" class="form-control" id="itemChecklist1" name="note[]" placeholder="Пункт" required>');
+
+            let itemChecklistVar = document.createElement('input');
+            itemChecklistVar.className = 'form-control';
+            itemChecklistVar.placeholder = 'Пункт';
+            itemChecklistVar.type = 'text';
+            itemChecklistVar.id = 'itemChecklist' + counter;
+            itemChecklistVar.name = 'note[]';
+
+        wrap.insertAdjacentHTML('beforeend', '<tr>' +
+            '<td class="text-center col-1"><input type="text" class="form-control" id="itemChecklist[]" name="note[]" placeholder="Пункт" required></td>' +
+            '<td class="text-center col-1"><input type="checkbox" class="" name="completed[]"></td>' +
+            '</tr>');
         counter++;
     }
 
-    function removeField() {
-        $(document).on('click', '.btn.kill-tr', function () {
-            $(this).parents('tr').remove();
-        });
+    function getElem() {
+        document.getElementById()
     }
 
-    window.onload = function () {
-        let completed = $('.completed');
-        for (elem of completed) {
-            console.log(elem.checked);
-        }
-    }
+
 </script>
 
 

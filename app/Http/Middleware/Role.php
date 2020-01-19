@@ -11,8 +11,8 @@ class Role
     {
         if ( ! Auth::check()) {
             abort(403, 'Unauthorized action.');
-        } else                                                                         //1 moderator
-            if (Auth::user()->accessRight == 2 || Auth::user()->accessRight == 1){    //2 admin
+        } else                                                                         //2 admin
+            if (Auth::user()->accessRight == 2 || Auth::user()->accessRight == 1){    //1 moderator
                 return $next($request);
             }
         abort(403, 'Access denied.');

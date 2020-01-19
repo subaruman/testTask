@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Checklist;
 use App\ItemsChecklist;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controller;
 
 class ChecklistController extends Controller
 {
@@ -18,10 +19,11 @@ class ChecklistController extends Controller
      */
     public function index()
     {
-
-        return view('checklist.index', [
-            'checklists' => Checklist::where('user_id', '=', Auth::id())->get(),
+//        dd(Checklist::with('user')->where('user_id', '=', Auth::id())->get());
+        return view('admin.checklist.index', [
+            'checklists' => Checklist::all(),
             'items' => ItemsChecklist::all(),
+            'users' => User::all(),
         ]);
 
     }
@@ -33,7 +35,7 @@ class ChecklistController extends Controller
      */
     public function create()
     {
-        return view('checklist.create', [
+        return view('admin.checklist.create', [
             'checklists' => [],
             'items' => [],
         ]);
@@ -48,14 +50,6 @@ class ChecklistController extends Controller
     public function store(Request $request)
     {
         //
-
-            $user = (User::all()->where('id', '=', Auth::id()));
-            $checklists_limit = $user[1]['checklists_limit'];
-            if (Checklist::all()
-                    ->where('user_id', '=', Auth::id())
-                    ->count() >= $checklists_limit)
-                abort(403, 'Превышен лимит создания чеклистов.');
-
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
         ]);
@@ -71,6 +65,7 @@ class ChecklistController extends Controller
             'user_id' => Auth::id(),
             ]);
 
+
         $notes = $request['note'];
         if (!empty($notes)){
             foreach ($notes as $note){
@@ -83,7 +78,7 @@ class ChecklistController extends Controller
                 }
             }
         }
-        return redirect()->route('checklist.index');
+        return redirect()->route('admin.checklist.index');
     }
 
     /**
@@ -110,7 +105,7 @@ class ChecklistController extends Controller
             ->where('checklist_id', '=', $checklist->id)
             ->get();
 
-        return view('checklist.edit', [
+        return view('admin.checklist.edit', [
             'checklist' => $checklist,
             'items' => $items
         ]);
@@ -141,6 +136,8 @@ class ChecklistController extends Controller
                 ->update([
                     'note' => $request->itemChecklist[$i]
                 ]);
+            var_dump($items[$i]->id);
+            var_dump($request->itemChecklist[$i]);
         }
 
          //если добавили новые пункты
@@ -156,9 +153,8 @@ class ChecklistController extends Controller
                 }
             }
         }
-
         $checklist->save();
-        return redirect()->route('checklist.index');
+        return redirect()->route('admin.checklist.index');
     }
 
     /**
@@ -171,6 +167,6 @@ class ChecklistController extends Controller
     {
         $checklist->delete();
         ItemsChecklist::where('checklist_id', '=', $checklist->id)->delete();
-        return redirect()->route('checklist.index');
+        return redirect()->route('admin.checklist.index');
     }
 }

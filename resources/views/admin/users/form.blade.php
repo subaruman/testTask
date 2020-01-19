@@ -20,6 +20,13 @@
 <label for="">Подтверждение</label>
 <input type="password" class="form-control" name="password_confirmation">
 
+@if (Auth::user()->accessRight == 2)
+    <label for="">Ограничение на количество чеклистов</label>
+    <input type="text" class="form-control" name="checklists_limit" value="{{$user->checklists_limit}}">
+@endif
+
+
+
 <label for="">Бан</label>
 
 @if (!empty($user->banned))

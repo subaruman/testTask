@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::group(['prefix'=>'admin','namespace'=>'Admin', 'middleware'=>['role', 'ban']], function(){
     Route::get('/', 'DashboardController@dashboard')->name('admin.index');
-    Route::resource('/category', 'CategoryController', ['as'=>'admin']);
+    Route::resource('/checklist', 'ChecklistController', ['as'=>'admin']);
     Route::resource('/users', 'UserController', ['as' => 'admin']);
     Route::put('/setban', 'UserController@setban', ['as' => 'users'])->name('admin.users.setban');
 

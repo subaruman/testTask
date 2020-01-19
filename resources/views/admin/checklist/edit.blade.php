@@ -11,12 +11,12 @@
 
         <hr/>
 
-        <form class="form-horizontal" action="{{route('checklist.update', $checklist)}}" method="post">
+        <form class="form-horizontal" action="{{route('admin.checklist.update', $checklist)}}" method="post">
             {{method_field('PUT')}}
             {{csrf_field()}}
 
 
-            @include('checklist.form')
+            @include('admin.checklist.form')
 
 
         </form>
