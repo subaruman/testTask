@@ -40,24 +40,30 @@ class ChecklistController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
         ]);
+        if ($request->checklist_completed == 'on') {
+            $completed = 1;
+        } else {
+            $completed = 0;
+        }
         Checklist::create([
             'name' => $request['name'],
-            'completed' => false
+            'completed' => $completed
         ]);
 
         $indexArr = 0; //индекс массива для вставки в бд
         $notes = $request['note'];
-        if (!empty($notes)){
-            foreach ($notes as $note){
+        if (!empty($notes)) {
+            foreach ($notes as $note) {
                 if (!empty($note)) {
 
                     ItemsChecklist::create([
@@ -76,7 +82,7 @@ class ChecklistController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Checklist  $checklist
+     * @param \App\Checklist $checklist
      * @return \Illuminate\Http\Response
      */
     public function show(Checklist $checklist)
@@ -87,7 +93,7 @@ class ChecklistController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Checklist  $checklist
+     * @param \App\Checklist $checklist
      * @return \Illuminate\Http\Response
      */
     public function edit(Checklist $checklist)
@@ -96,7 +102,7 @@ class ChecklistController extends Controller
         $items = ItemsChecklist::with('checklist')
             ->where('checklist_id', '=', $checklist->id)
             ->get();
-//        dd($items);
+
         return view('checklist.edit', [
             'checklist' => $checklist,
             'items' => $items
@@ -106,63 +112,66 @@ class ChecklistController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Checklist  $checklist
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Checklist $checklist
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Checklist $checklist)
     {
-//        dd($request);
-
-
+        dump('update');
+        dump($checklist ,$request );
+        dd($request->itemChecklist);
         $checklist->name = $request->name;
-        if ($request->completed == 'on')
+        if ($request->checklist_completed == 'on') {
             $checklist->completed = 1;
-        else $checklist->completed = 0;
+        } else {
+            $checklist->completed = 0;
+        }
 
         $items = ItemsChecklist::with('checklist')
             ->where('checklist_id', '=', $checklist->id)
-            ->get();
+            ->delete();
 
         //изменения пункта чеклиста
-        for ($i = 0; $i < $items->count(); $i++) {
-            if (empty($request->itemChecklist[$i])){
-//                dd($request->itemChecklist);
+     /*   for ($i = 0; $i < $items->count(); $i++) {
+            if (empty($request->itemChecklist[$i])) {
                 ItemsChecklist::where('number_item', $i)->delete();
             } else {
-            ItemsChecklist::where('id', '=', $items[$i]->id)
-                ->update([
-                    'note' => $request->itemChecklist[$i]
-                ]);
-//            var_dump($items[$i]->id);
-//            var_dump($request->itemChecklist[$i]);
-            }
-        }
-
-        //добавление нового пункта чеклиста
-        $indexArr = $request->itemChecklist;
-        end($indexArr);             //получение последнего индекса элемента
-        $indexArr = key($indexArr);       //для вставки в бд
-        $indexArr++;
-
-        $notes = $request->note;
-        if (!empty($notes)) {
-            foreach ($notes as $note) {
-                if (!empty($note)) {
-                    ItemsChecklist::create([
-                        'note' => $note,
-                        'number_item' => $indexArr,
-                        'checklist_id' => $checklist->id,
-                        'completed' => false,
+                ItemsChecklist::where('id', '=', $items[$i]->id)
+                    ->update([
+                        'note' => $request->itemChecklist[$i]
                     ]);
-                }
             }
-        } else {
-            /*$itemChecklist = ItemsChecklist::find()
-            ItemsChecklist::delete();*/
+        }*/
+
+       /* //добавление нового пункта чеклиста
+        $indexArr = $request->itemChecklist;
+        if (!empty($indexArr)) {
+            end($indexArr);             //получение последнего индекса элемента
+            $indexArr = key($indexArr);       //для вставки в бд
+            $indexArr++;
+     */
+
+
+       /* $indexNoteArr = $request->note;
+        if (!empty($indexNoteArr)) {
+            $indexNoteArr = key($indexNoteArr);
+        } //индекс массива новых пунктов*/
+
+       $indexArr = 0;
+        $arItemsChecklist = $request->itemChecklist;
+        if (!empty($arItemsChecklist)) {
+            foreach ($arItemsChecklist as $item) {
+
+                ItemsChecklist::create([
+                    'note' => $item,
+                    'number_item' => $indexArr,
+                    'checklist_id' => $checklist->id,
+                    'completed' => false,
+                ]);
+                $indexArr++;
+            }
         }
-
-
         $checklist->save();
         return redirect()->route('checklist.index');
     }
@@ -170,17 +179,13 @@ class ChecklistController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Checklist  $checklist
+     * @param \App\Checklist $checklist
      * @return \Illuminate\Http\Response
      */
     public function destroy(Checklist $checklist)
     {
-//        dd($checklist);
         $checklist->delete();
         ItemsChecklist::where('checklist_id', $checklist->id)->delete();
-//        dd($itemsChecklist);
-
-
         return redirect()->route('checklist.index');
     }
 }

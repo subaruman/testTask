@@ -11,7 +11,7 @@
 
         <hr/>
 
-        <form class="form-horizontal" action="{{route('checklist.update', $checklist)}}" method="post">
+        <form class="form-horizontal" action="{{route('checklist.update', $checklist, $items)}}" method="post">
             {{method_field('PUT')}}
             {{csrf_field()}}
 
