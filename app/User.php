@@ -38,6 +38,6 @@ class User extends Authenticatable
     ];
 
     public function checklist() {
-        return $this->hasMany('App\Checklist', 'checklist_id');
+        return $this->hasMany('App\Checklist', 'user_id');
     }
 }
