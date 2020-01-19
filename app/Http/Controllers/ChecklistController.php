@@ -118,9 +118,6 @@ class ChecklistController extends Controller
      */
     public function update(Request $request, Checklist $checklist)
     {
-        dump('update');
-        dump($checklist ,$request );
-        dd($request->itemChecklist);
         $checklist->name = $request->name;
         if ($request->checklist_completed == 'on') {
             $checklist->completed = 1;
