@@ -12,7 +12,7 @@
 <input type="text" class="form-control" name="name" placeholder="Имя" value="@if(old('name')){{old('name')}}@else{{$user->name ?? ""}}@endif" required>
 
 <label for="">Email</label>
-<input type="email" class="form-control" name="email" placeholder="Имя" value="@if(old('email')){{old('email')}}@else{{$user->email ?? ""}}@endif" required>
+<input type="email" class="form-control" name="email" placeholder="Email" value="@if(old('email')){{old('email')}}@else{{$user->email ?? ""}}@endif" required>
 
 <label for="">Пароль</label>
 <input type="password" class="form-control" name="password">
@@ -22,7 +22,10 @@
 
 @if (Auth::user()->accessRight == 2)
     <label for="">Ограничение на количество чеклистов</label>
-    <input type="text" class="form-control" name="checklists_limit" value="{{$user->checklists_limit}}">
+    <input type="text" class="form-control" name="checklists_limit"
+           @if (!empty($user->checklists_limit)) value="{{$user->checklists_limit}}">
+    @else value="{{$checklists_limit}}">
+    @endif
 @endif
 
 

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class ChecklistController extends Controller
 {
 
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +19,6 @@ class ChecklistController extends Controller
      */
     public function index()
     {
-
         return view('checklist.index', [
             'checklists' => Checklist::where('user_id', '=', Auth::id())->get(),
             'items' => ItemsChecklist::all(),
@@ -49,13 +49,13 @@ class ChecklistController extends Controller
     {
         //
 
-            $user = (User::all()->where('id', '=', Auth::id()));
-            $user = current(current($user));
-            $checklists_limit = $user['checklists_limit'];
-            if (Checklist::all()
-                    ->where('user_id', '=', Auth::id())
-                    ->count() >= $checklists_limit)
-                abort(403, 'Превышен лимит создания чеклистов.');
+        $user = (User::all()->where('id', '=', Auth::id()));
+        $user = current(current($user));
+        $checklists_limit = $user['checklists_limit'];
+        if (Checklist::all()
+                ->where('user_id', '=', Auth::id())
+                ->count() >= $checklists_limit)
+            abort(403, 'Превышен лимит создания чеклистов.');
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -72,12 +72,12 @@ class ChecklistController extends Controller
             'user_id' => Auth::id(),
             ]);
 
-        $notes = $request['note'];
-        if (!empty($notes)){
-            foreach ($notes as $note){
-                if (!empty($note)) {
+        $items = $request['itemChecklist'];
+        if (!empty($items)){
+            foreach ($items as $item){
+                if (!empty($item)) {
                     ItemsChecklist::create([
-                        'note' => $note,
+                        'note' => $item,
                         'checklist_id' => Checklist::query()->max('id'),
                         'completed' => false,
                     ]);
@@ -134,23 +134,23 @@ class ChecklistController extends Controller
 
         $items = ItemsChecklist::with('checklist')
             ->where('checklist_id', '=', $checklist->id)
-            ->get();
-
+            ->delete();
+/*
         for ($i = 0; $i < $items->count(); $i++) {
             ItemsChecklist::with('checklist')
                 ->where('id', '=', $items[$i]->id)
                 ->update([
                     'note' => $request->itemChecklist[$i]
                 ]);
-        }
+        }*/
 
          //если добавили новые пункты
-        $notes = $request->note;
-        if (!empty($notes)) {
-            foreach ($notes as $note) {
-                if (!empty($note)) {
+        $items = $request['itemChecklist'];
+        if (!empty($items)) {
+            foreach ($items as $item) {
+                if (!empty($item)) {
                     ItemsChecklist::create([
-                        'note' => $note,
+                        'note' => $item,
                         'checklist_id' => $checklist->id,
                         'completed' => false,
                     ]);

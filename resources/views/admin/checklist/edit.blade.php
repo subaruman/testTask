@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="container">
-        @component('checklist.breadcrumb')
+        @component('admin.components.breadcrumb')
             @slot('title') Редактирование чек листа @endslot
             @slot('parent') Главная @endslot
             @slot('active') Чек лист @endslot

@@ -33,7 +33,8 @@ class UserController extends Controller
     public function create()
     {
         return view('admin.users.create', [
-            'user' => []
+            'user' => [],
+            'checklists_limit' => 10
         ]);
     }
 
@@ -55,6 +56,7 @@ class UserController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
+            'checklists_limit' => 10,
         ]);
         return redirect()->route('admin.users.index');
     }

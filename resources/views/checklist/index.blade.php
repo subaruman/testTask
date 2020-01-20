@@ -16,7 +16,6 @@
             @forelse($checklists as $checklist)
 
                 <tr>
-
                     <td class="text-center col-1">{{$checklist->name}}</td>
                     @if ($checklist->completed == false)
                         <td class="text-center col-1"><input type="checkbox" name="completed" class="" onclick="return false;"></td>
@@ -38,7 +37,6 @@
                         <a class="btn btn-default" href="{{route('checklist.destroy', $checklist)}}"> </a>
                         <a class="btn btn-default" href="{{route('checklist.edit',  $checklist)}}"><i class="fa fa-edit"></i> </a>
                         <button type="submit" class="btn"><i class="fa fa-trash-o"></i></button>
-
                     </form>
                     </td>
                 </tr>

@@ -29,14 +29,14 @@
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="ui-35.html#">
-{{--    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}}
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-{{--    <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>--}}
+    <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
-{{--    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>--}}
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 
-{{--    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">--}}
-    {{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">--}}
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <!-- Javascript files -->
     <!-- jQuery -->
     <script src="/resources/js/jquery.js"></script>
@@ -90,9 +90,9 @@
                                 {{ Auth::user()->name }} <span class="caret"></span>
                                 @if (Auth::user()->accessRight == 2)
                                     <span class="font-weight-light">(admin)</span>
-                                    @if (Auth::user()->accessRight == 1)
-                                        <span class="font-weight-light">moderator</span>
-                                    @endif
+                                @endif
+                                @if (Auth::user()->accessRight == 1)
+                                    <span class="font-weight-light">(moderator)</span>
                                 @endif
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
